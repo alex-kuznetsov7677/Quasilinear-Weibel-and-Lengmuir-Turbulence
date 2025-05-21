@@ -1,26 +1,32 @@
-# Компилятор
-CC = mpicc
+CXX = mpicxx
+CXXFLAGS = -std=c++11 -O3 -march=native -ffast-math -Iinclude
+LDFLAGS = -lm -lmpi
 
-# Флаги компиляции
-CXXFLAGS = -std=c++0x -O3
-LDLIBS = -lstdc++ -lm
+SRC_DIR = src
+UTILS_DIR = utils
+BUILD_DIR = build
 
-# Исходные файлы
-SOURCES = main.cpp Integrals.cpp Fields_changing.cpp Distribution_function_changing.cpp Preparation.cpp
+SOURCES = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(UTILS_DIR)/*.cpp)
+OBJECTS = $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:.cpp=.o)))
+TARGET = $(BUILD_DIR)/exe4_c
 
-# Имя исполняемого файла
-TARGET = exe2_c
+all: $(BUILD_DIR) $(TARGET)
 
-# Правило по умолчанию
-all: $(TARGET)
+$(TARGET): $(OBJECTS)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
 
-# Правило для сборки исполняемого файла
-$(TARGET): $(SOURCES)
-	$(CC) -o $(TARGET) $(SOURCES) $(CXXFLAGS) $(LDLIBS)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-# Правило для очистки скомпилированных файлов
+$(BUILD_DIR)/%.o: $(UTILS_DIR)/%.cpp
+	$(CXX) $(CXXFLAGS) -c $< -o $@
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
 clean:
-	rm -f $(TARGET) *.o
+	rm -rf $(BUILD_DIR)
 
-# Правило для пересборки
 rebuild: clean all
+
+.PHONY: all clean rebuild
