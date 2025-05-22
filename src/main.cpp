@@ -17,6 +17,7 @@
 #include "Distribution_function_changing.h" 
 #include "Integrals.h" 
 #include "ConfigReader.h"
+#include "OutputWriter.h"
 using namespace std;
 
 auto config = ReadConfig("config.txt");
@@ -115,32 +116,6 @@ int main(int argc, char** argv)
 	vector <complex<double> > f0k;	vector <complex<double> > f0k2;	vector <complex<double> > f0kcel;	vector <complex<double> > f0k2cel;
 
 
-	ofstream CMFt100000("DESCRIPTIONRe[B]__365.txt");
-	CMFt100000 << "ratio=0.01; V_stream=0.1*4.5/sqrt(2); T_bkg=0.1; Beta_stream=0.1;dt=0.2(cout100*0.2),Beta_perp=0.1,30x10garmoniki.start_without_pause_ravnyeNU(0.12 * pow(2., i * 0.06))(K=-0.06+ 0.012 * i))фазанорм. начальная каппа=infty ФР, setka == 300, BBYmax = BBXmax;double BBXmax = Beta_perp * 4;dBBY=1.2*dBBX" << '\n';
-	CMFt100000 << '\n' << '\n' << "1D_PUCHOK_setka30x10=Kyvector.push_back(2.5 + 0.05* i)Kxvector_puchok.push_back(-0.5.+0.05+0.1*i)";
-	CMFt100000 << '\n' << "(bez bz(ky=0)not impact on two-stream modes)NU=0";
-	CMFt100000 << '\n' << "без уждвоенной моды";
-	CMFt100000 << '\n' << "1p.version"; cout << '\n' << "1p.version";
-	ofstream CMFt2000("abs[B]___365MATLAB.txt");
-	ofstream CMFt2003("abs[Bts]___365MATLAB.txt");
-	ofstream CMFt2001("abs[Ex]___365MATLAB.txt");
-	ofstream CMFt2002("abs[Ey]___365MATLAB.txt");
-	ofstream CMFt1301("Wy0__365.txt");
-	ofstream CMFt1303("Wx0__365.txt");
-	ofstream CMFt1302("A__365.txt");
-	ofstream CMFt30("sr_b___365.txt");
-	ofstream CMFt31("sr_bts___365.txt");
-	ofstream CMFt13045("NU_eff__365.txt");
-	ofstream CMFt32("Re[Time]__365.txt");
-	ofstream CMFt1("sr_ey___365.txt");
-	ofstream CMFt2("sr_ex___365.txt");
-	ofstream CMFt_108("ReFUNC0_365.txt");
-	ofstream CMFt_109("ImFUNC111_30000_157____631_365.txt");
-	ofstream CMFt_110("ImFUNC111_30000_47___631_365.txt");
-	ofstream CMFt_161("ImFUNC111_160000_47____631_365.txt");
-
-
-
 	//double trimax = 0;
 	double max_with_stream = 0;
 
@@ -172,8 +147,6 @@ int main(int argc, char** argv)
 		}
 	}
 
-	CMFt100000 << VVyzero << '\n';
-	CMFt100000 << VVxzero << '\n';
 
 	for (int i = 0; i < Ngarmonik_F; i++) {
 		B.push_back((0., 0.));
@@ -196,7 +169,6 @@ int main(int argc, char** argv)
 		printf("This application is meant to be run with Ngarmonik/2 MPI processes.\n");
 		MPI_Abort(MPI_COMM_WORLD, EXIT_FAILURE);
 	}
-	std::cout << "MPI size: " << size << std::endl;
 	double B_MOD; double DBprod_MOD; double Kprod; double NU_effective; double sqrt_VVyzero;
 	for (int i = 0; i < Ngarmonik_F / size; i++) {
 		b_F.push_back((0., 0.));		b1_F.push_back((0., 0.)); 		blast_F.push_back((0., 0.));		b1last_F.push_back((0., 0.));
@@ -237,8 +209,12 @@ int main(int argc, char** argv)
 		b1last_TS.push_back(0);
 
 	}
+	OutputFiles out;
+	if (rank==0){
+		std::cout << "MPI size: " << size << std::endl;
+		InitializeOutputFiles(out,config);
 
-
+	}
 	for (int i = 0; i < Ngarmonik_F / size; i++) {
 		complex< double > z(exp(0));
 		BEXTvector.push_back(start_level_F_modes * z);
@@ -269,15 +245,22 @@ int main(int argc, char** argv)
 	if (rank == 0) {
 		starttime = MPI_Wtime();
 	}
-	for (int i = 2; i < Tmax / dt; i++) {
 
-		if (i == 100) {
+
+
+	for (int pk = 2; pk < Tmax / dt; pk++) {
+
+		if (pk == 100) {
 			start_level_F_modes = 0;
 		}
 
+
 		f0kcel = f0k2cel;
+
 		fill(parallel_mas2.begin(), parallel_mas2.end(), 0);
+
 		PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_F, Kvector_F, IEy1last_F, IEx1last_F, b1last_F, fk_F, parallel_mas2);
+
 		MPI_Reduce(parallel_mas2.data(), parallel_mas3.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
 		if (rank == 0) {
 			transform(f0kcel.begin(), f0kcel.end(), parallel_mas3.begin(), f0k2cel.begin(), std::plus<complex<double> >());
@@ -292,6 +275,7 @@ int main(int argc, char** argv)
 
 
 		MPI_Bcast(f0k2cel.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+		
 		PERTURBATION_OF_MODES_DISTRIBUTION(rank, size, Ngarmonik_F, Kvector_F, IEylast_F, IExlast_F, blast_F, fkcel_F, fk_F, f0k2cel,  parallel_mas1_F);
 		fk_F = parallel_mas1_F;
 		PERTURBATION_OF_MODES_DISTRIBUTION(rank, size, Ngarmonik_TS, Kvector_TS, IEylast_TS, IExlast_TS, blast_TS, fkcel_TS, fk_TS, f0k2cel, parallel_mas1_TS);
@@ -300,80 +284,29 @@ int main(int argc, char** argv)
 
 
 
-
 		FILAMENTATION_FIELDS(rank, size, Ngarmonik_F, Kvector_F, IEylast_F, IExlast_F, blast_F, IEy_F, IEx_F, b_F, IEy1_F, IEx1_F, b1_F, IEy1last_F, IEx1last_F, b1last_F, fk_F, fkcel_F);
-		MPI_Gather(b_F.data(), Ngarmonik_F / size, MPI_DOUBLE_COMPLEX, B.data(), Ngarmonik_F / size, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-		MPI_Gather(b1_F.data(), Ngarmonik_F / size, MPI_DOUBLE_COMPLEX, B1.data(), Ngarmonik_F / size, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-
-
 		TWO_STREAM_FIELDS(rank, size, Ngarmonik_TS, Kvector_TS, IEylast_TS, IExlast_TS, blast_TS, IEy_TS, IEx_TS, b_TS, IEy1_TS, IEx1_TS, b1_TS, IEy1last_TS, IEx1last_TS, b1last_TS, fk_TS, fkcel_TS);
-		MPI_Gather(IEx_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, IEX_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-		MPI_Gather(IEy_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, IEY_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
-		MPI_Gather(b_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, B_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
 
-		int pk = i;
-		if (rank == 0) {
+		if (pk % 10 == 0) {
+			MPI_Gather(b_F.data(), Ngarmonik_F / size, MPI_DOUBLE_COMPLEX, B.data(), Ngarmonik_F / size, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+			MPI_Gather(b1_F.data(), Ngarmonik_F / size, MPI_DOUBLE_COMPLEX, B1.data(), Ngarmonik_F / size, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
 
-			if (pk % 10 == 0) {
-				cout << pk * dt << '\t';
-				double Bmodkvadr = 0.;
-				for (int it = 0; it < Ngarmonik_F; it++) {
 
-					Bmodkvadr = Bmodkvadr + pow(abs(B[it]), 2);
-					
-				}
-				double IExkvadr = 0.;  double IEykvadr = 0.;  double Bkvadr = 0.;
-				for (double j = 0; j < Ngarmonik_TS; j++) {
-					IExkvadr = IExkvadr + pow(abs(IEX_TS[j]), 2);
-					IEykvadr = IEykvadr + pow(abs(IEY_TS[j]), 2);
-					Bkvadr = Bkvadr + pow(abs(B_TS[j]), 2);
 
-				}
-
-				double Bmod = sqrt(Bmodkvadr);
-				double Bmodts = sqrt(Bkvadr);
-				double VVx0 = real(ENERGY_X(f0k2cel));
-				double VVy0 = real(ENERGY_Y(f0k2cel));
-				double Areal = (VVy0) / (VVx0)-1;
-				double IExmod = sqrt(IExkvadr);
-				double IEymod = sqrt(IEykvadr);
-				cout << real(DENSITY(f0k2cel, 0)) << '\t' << Areal << '\t' << Bmod << '\t' << IExmod << '\t' << IEymod << '\t' << Bmodts << '\t' << NU_effective << '\t' << Kprod << '\t' << '\n';
-
-				for (double p = 0; p < Ngarmonik_F; p++) {
-					CMFt2000 << abs(B[p]) << " ";
-				}
-				for (double p = 0; p < Ngarmonik_TS; p++) {
-					CMFt2002 << abs(IEY_TS[p]) << " ";
-					CMFt2001 << abs(IEX_TS[p]) << " ";
-					CMFt2003 << abs(B_TS[p]) << " ";
-				}
-
-				CMFt2000 << ";"; CMFt2001 << ";"; CMFt2002 << ";";
-				CMFt30 << Bmod << ",";
-				CMFt31 << Bmodts << ",";
-				CMFt1 << IEymod << ",";
-				CMFt2 << IExmod << ",";
-				CMFt1302 << Areal << ",";
-				CMFt1301 << VVy0 << ",";
-				CMFt1303 << VVx0 << ",";
-				CMFt13045 << NU_effective << ",";
-			}
+			MPI_Gather(IEx_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, IEX_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+			MPI_Gather(IEy_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, IEY_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
+			MPI_Gather(b_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, B_TS.data(), Ngarmonik_TS / size, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
 		}
 
-		if (rank == 0) {
-			if (pk % 400 == 0) {
-				for (double j = 0; j < setkaBB; j++) {
-					double BBXnomer = j * setkaBB;
-					for (double k = 0; k < setkaBB; k++) {
-						double BBXnomerk = BBXnomer + k;
-						CMFt_108 << real(f0k[BBXnomerk]) << " ";
-					}
-
-				}
-				CMFt_108 << ";";
-
-			}
+		
+		if (rank == 0 && pk % 10 == 0) {
+			double time = pk*dt;
+            		out.log_fields(time, B, IEX_TS, IEY_TS, B_TS, Ngarmonik_F, Ngarmonik_TS,f0k2cel, NU_effective, Kprod);
 		}
+		if (rank == 0 && pk % 400 == 0) {
+            		out.log_distribution(setkaBB, f0k);
+		}
+
 
 
 		f0k = f0k2;
@@ -415,30 +348,12 @@ int main(int argc, char** argv)
 
 	}
 
-	CMFt100000.close();
-	CMFt2000.close();
-	CMFt30.close();
-	CMFt31.close();
-	CMFt1301.close();
-	CMFt1303.close();
-	CMFt1302.close();
-	CMFt13045.close();
-	CMFt2001.close();
-	CMFt2002.close();
-	CMFt2003.close();
-
-	CMFt1.close();
-	CMFt2.close();
-	CMFt_108.close();
-
+	void close_all();
+	MPI_Barrier(MPI_COMM_WORLD);
 	if (rank == 0) {
 		endtime = MPI_Wtime();
 		cout << "final" << endtime - starttime << '\n';
-		CMFt32 << endtime - starttime << '\n';
 	}
-	CMFt32.close();
-	MPI_Barrier(MPI_COMM_WORLD);
-
 	MPI_Finalize();
 
 

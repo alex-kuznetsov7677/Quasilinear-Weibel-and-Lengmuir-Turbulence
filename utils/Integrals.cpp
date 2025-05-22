@@ -5,7 +5,7 @@
 #include "my_variables.h"
 
 
-complex <double> DENSITY(std::vector<complex<double> >& fka, int p3) {
+std::complex <double> DENSITY(const std::vector<std::complex<double> >& fka, int p3) {
 
 
 	complex<double> k(0, 0);
@@ -18,7 +18,7 @@ complex <double> DENSITY(std::vector<complex<double> >& fka, int p3) {
 	}
 	return k;
 }
-complex <double> ENERGY_Y(std::vector<complex<double> >& fka) {
+std::complex <double> ENERGY_Y(const std::vector<std::complex<double> >& fka) {
 
 	complex<double> k(0, 0);
 	for (int i = 0; i < setkaBB; i++) {
@@ -30,7 +30,8 @@ complex <double> ENERGY_Y(std::vector<complex<double> >& fka) {
 	}
 	return k;
 }
-complex <double> ENERGY_X(std::vector<complex<double> >& fka) {
+
+std::complex <double> ENERGY_X(const std::vector<std::complex<double> >& fka) {
 
 
 	complex<double> k(0, 0);

@@ -8,7 +8,7 @@ BUILD_DIR = build
 
 SOURCES = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(UTILS_DIR)/*.cpp)
 OBJECTS = $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:.cpp=.o)))
-TARGET = $(BUILD_DIR)/exe4_c
+TARGET = $(BUILD_DIR)/exe7_c
 
 all: $(BUILD_DIR) $(TARGET)
 

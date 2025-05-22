@@ -5,6 +5,7 @@
 #include <string>
 #include <fstream>
 #include <sstream>
+#include <iostream>
 
 std::map<std::string, double> ReadConfig(const std::string& filename);
 

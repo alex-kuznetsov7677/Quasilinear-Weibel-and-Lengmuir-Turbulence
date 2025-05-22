@@ -1,3 +1,8 @@
+#include <map>
+#include <string>
+#include <fstream>
+#include <sstream>
+
 #include "ConfigReader.h"
 
 std::map<std::string, double> ReadConfig(const std::string& filename) {

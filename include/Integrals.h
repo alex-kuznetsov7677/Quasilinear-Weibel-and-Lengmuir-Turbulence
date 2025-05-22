@@ -1,4 +1,6 @@
 #pragma once
-complex <double> DENSITY(std::vector<complex<double> >& fka, int p3);
-complex <double> ENERGY_Y(std::vector<complex<double> >& fka);
-complex <double> ENERGY_X(std::vector<complex<double> >& fka);
+#include <complex>
+#include <vector>
+std::complex <double> DENSITY(const std::vector<std::complex<double> >& fka, int p3);
+std::complex <double> ENERGY_Y(const std::vector<std::complex<double> >& fka);
+std::complex <double> ENERGY_X(const std::vector<std::complex<double> >& fka);
