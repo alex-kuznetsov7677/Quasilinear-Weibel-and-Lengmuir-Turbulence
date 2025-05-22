@@ -25,6 +25,5 @@ Apache License 2.0 - See [LICENSE](LICENSE) for details.
 
 For questions and bug reports:
 
-- [Open an issue](https://github.com/yourusername/your-repo/issues)
+- [Open an issue](https://github.com/alex-kuznetsov7677/Quasilinear-Weibel-and-Lengmuir-Turbulence)
 - Email: [kuznetsov.alexey@ipfran.ru](mailto:kuznetsov.alexey@ipfran.ru)
-- Visit: [IAP RAS Plasma Theory Group](https://www.ipfran.ru/en/institute/structure/plasma-theory-lab)
