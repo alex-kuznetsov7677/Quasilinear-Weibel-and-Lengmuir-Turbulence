@@ -1,12 +1,9 @@
-#ifndef CONFIG_READER_H
-#define CONFIG_READER_H
+#pragma once
 
 #include <map>
 #include <string>
 #include <fstream>
 #include <sstream>
-#include <iostream>
 
 std::map<std::string, double> ReadConfig(const std::string& filename);
 
-#endif

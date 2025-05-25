@@ -1,18 +1,7 @@
 #pragma once
-#include<fstream>
-#include <vector>
-#include<sstream> 
-#include <cmath>
-#include <iostream>
-#include <cstdlib>
-#include <complex>
-#include <time.h>
-#include <stdio.h>
-#include "mpi.h"
-#include <algorithm> 
-#include <random>
 
-using namespace std;
+#include <complex>
+
 
 extern const int NUM_NODES;       // Количество узлов
 extern const int NUM_THREADS;     // Количество потоков на каждый процесс
@@ -59,7 +48,7 @@ extern double dt;
 
 
 
-extern complex<double> I; 
+extern std::complex<double> I; 
 
 // useful constants
 extern double C1;

@@ -1,9 +1,12 @@
+#include "my_variables.h"
+#include "Distribution_function_changing.h"
+
 #include <vector>
 #include <cmath>
-#include <iostream>
+#include <complex> 
 
-#include "my_variables.h"
-
+using std::complex;
+using std::vector;
 
 complex<double>DifY(int& N, std::vector<complex<double> >& fka) {
 	complex<double> k;

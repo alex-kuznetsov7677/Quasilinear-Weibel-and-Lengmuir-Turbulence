@@ -13,7 +13,8 @@ struct OutputFiles {
     std::ofstream CMFt30, CMFt31, CMFt13045;
     std::ofstream CMFt32, CMFt1, CMFt2;
     std::ofstream CMFt_108, CMFt_109, CMFt_110, CMFt_161;
-    
+    void log_number_MPI_processes(int number);
+    void log_execution_time(double time);
     void close_all();
     void log_fields(double time,
                     const std::vector<std::complex<double>>& B,

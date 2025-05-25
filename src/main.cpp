@@ -1,16 +1,13 @@
-#include<fstream>
-#include <vector>
-#include<sstream> 
 #include <cmath>
-#include <iostream>
-#include <cstdlib>
 #include <complex>
-#include <time.h>
-#include <stdio.h>
-#include "mpi.h"
-#include <algorithm> 
+#include <vector>
+#include <cstdlib>
 #include <random>
+#include <iostream>
+#include <algorithm> 
 
+#include <mpi.h>
+// 4. Локальные заголовки проекта
 #include "my_variables.h" 
 #include "Preparation.h" 
 #include "Fields_changing.h" 
@@ -18,7 +15,9 @@
 #include "Integrals.h" 
 #include "ConfigReader.h"
 #include "OutputWriter.h"
+
 using namespace std;
+
 
 auto config = ReadConfig("config.txt");
 
@@ -211,7 +210,7 @@ int main(int argc, char** argv)
 	}
 	OutputFiles out;
 	if (rank==0){
-		std::cout << "MPI size: " << size << std::endl;
+		out.log_number_MPI_processes(size);
 		InitializeOutputFiles(out,config);
 
 	}
@@ -257,7 +256,7 @@ int main(int argc, char** argv)
 
 		f0kcel = f0k2cel;
 
-		fill(parallel_mas2.begin(), parallel_mas2.end(), 0);
+		fill(parallel_mas2.begin(), parallel_mas2.end(), complex<double>(0., 0.));
 
 		PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_F, Kvector_F, IEy1last_F, IEx1last_F, b1last_F, fk_F, parallel_mas2);
 
@@ -310,7 +309,7 @@ int main(int argc, char** argv)
 
 
 		f0k = f0k2;
-		fill(parallel_mas2.begin(), parallel_mas2.end(), 0);
+		fill(parallel_mas2.begin(), parallel_mas2.end(), complex<double>(0., 0.));
 		PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_F, Kvector_F, IEylast_F, IExlast_F, blast_F, fkcel_F, parallel_mas2);
 		MPI_Reduce(parallel_mas2.data(), parallel_mas3.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
 		if (rank == 0) {
@@ -352,7 +351,8 @@ int main(int argc, char** argv)
 	MPI_Barrier(MPI_COMM_WORLD);
 	if (rank == 0) {
 		endtime = MPI_Wtime();
-		cout << "final" << endtime - starttime << '\n';
+		double time_ex=endtime - starttime;
+		out.log_execution_time(time_ex);
 	}
 	MPI_Finalize();
 

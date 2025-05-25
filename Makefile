@@ -10,7 +10,7 @@ SOURCES = $(wildcard $(SRC_DIR)/*.cpp) $(wildcard $(UTILS_DIR)/*.cpp)
 OBJECTS = $(addprefix $(BUILD_DIR)/, $(notdir $(SOURCES:.cpp=.o)))
 TARGET = $(BUILD_DIR)/exe7_c
 
-all: $(BUILD_DIR) $(TARGET)
+all: $(BUILD_DIR) output $(TARGET)
 
 $(TARGET): $(OBJECTS)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
@@ -24,9 +24,12 @@ $(BUILD_DIR)/%.o: $(UTILS_DIR)/%.cpp
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
 
+output:
+	mkdir -p output
+
 clean:
-	rm -rf $(BUILD_DIR)
+	rm -rf $(BUILD_DIR) output
 
 rebuild: clean all
 
-.PHONY: all clean rebuild
+.PHONY: all clean rebuild output

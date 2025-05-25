@@ -1,9 +1,11 @@
+#include "my_variables.h"
+#include "Integrals.h"
+
 #include <vector>
 #include <cmath>
-#include <iostream>
 
-#include "my_variables.h"
-
+using std::complex;
+using std::vector;
 
 std::complex <double> DENSITY(const std::vector<std::complex<double> >& fka, int p3) {
 

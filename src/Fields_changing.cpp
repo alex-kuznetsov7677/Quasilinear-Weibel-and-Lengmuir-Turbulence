@@ -1,10 +1,11 @@
-#include <vector>
-#include <cmath>
-#include <iostream>
 
 #include "my_variables.h"
-
-
+#include "Fields_changing.h"
+#include <vector>
+#include <cmath>
+#include <complex>
+using std::complex;
+using std::vector;
 complex <double> CURRENT_DENSITY_Y(std::vector<complex<double> >& fka, int p) {
 
 	complex<double> k(0, 0);

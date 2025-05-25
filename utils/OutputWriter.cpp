@@ -9,33 +9,37 @@
 #include "Integrals.h"  // для ENERGY_X, ENERGY_Y, DENSITY
 
 void InitializeOutputFiles(OutputFiles &files, const std::map<std::string, double>& config) {
-    files.CMFt100000.open("DESCRIPTIONRe[B]__366.txt");
+    files.CMFt100000.open("output/DESCRIPTIONRe[B]__366.txt");
     
     files.CMFt100000 << "=== CONFIGURATION PARAMETERS ===\n";
   	for (const auto& pair : config) {
         files.CMFt100000 << pair.first << " = " << pair.second << "\n";
     }
 	
-    files.CMFt2000.open("abs[B]___366MATLAB.txt");
-    files.CMFt2003.open("abs[Bts]___366MATLAB.txt");
-    files.CMFt2001.open("abs[Ex]___366MATLAB.txt");
-    files.CMFt2002.open("abs[Ey]___366MATLAB.txt");
-    files.CMFt1301.open("Wy0__366.txt");
-    files.CMFt1303.open("Wx0__366.txt");
-    files.CMFt1302.open("A__366.txt");
-    files.CMFt30.open("sr_b___366.txt");
-    files.CMFt31.open("sr_bts___366.txt");
-    files.CMFt13045.open("NU_eff__366.txt");
-    files.CMFt32.open("Re[Time]__366.txt");
-    files.CMFt1.open("sr_ey___366.txt");
-    files.CMFt2.open("sr_ex___366.txt");
-    files.CMFt_108.open("ReFUNC0_366.txt");
-    files.CMFt_109.open("output366.txt");
-    files.CMFt_110.open("ImFUNC111_30000_47___631_366.txt");
-    files.CMFt_161.open("ImFUNC111_160000_47____631_366.txt");
+    files.CMFt2000.open("output/abs[B]___366MATLAB.txt");
+    files.CMFt2003.open("output/abs[Bts]___366MATLAB.txt");
+    files.CMFt2001.open("output/abs[Ex]___366MATLAB.txt");
+    files.CMFt2002.open("output/abs[Ey]___366MATLAB.txt");
+    files.CMFt1301.open("output/Wy0__366.txt");
+    files.CMFt1303.open("output/Wx0__366.txt");
+    files.CMFt1302.open("output/A__366.txt");
+    files.CMFt30.open("output/sr_b___366.txt");
+    files.CMFt31.open("output/sr_bts___366.txt");
+    files.CMFt13045.open("output/NU_eff__366.txt");
+    files.CMFt32.open("output/Re[Time]__366.txt");
+    files.CMFt1.open("output/sr_ey___366.txt");
+    files.CMFt2.open("output/sr_ex___366.txt");
+    files.CMFt_108.open("output/ReFUNC0_366.txt");
+    files.CMFt_109.open("output/tabl366.txt");
+    files.CMFt_110.open("output/output366.txt");
+    files.CMFt_161.open("output/ImFUNC111_160000_47____631_366.txt");
 }
-
-
+void OutputFiles::log_execution_time(double time){
+	CMFt_110 << "Execution time:" << time << '\n';
+}
+void OutputFiles::log_number_MPI_processes(int number){
+	CMFt_110 << "Number of MPIprocesses:" << number << '\n';
+}
 void OutputFiles::log_fields(
     double time,
     const std::vector<std::complex<double>>& B,
