@@ -256,23 +256,35 @@ int main(int argc, char** argv)
 
 		f0kcel = f0k2cel;
 
+//		fill(parallel_mas2.begin(), parallel_mas2.end(), complex<double>(0., 0.));
+
+//		PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_F, Kvector_F, IEy1last_F, IEx1last_F, b1last_F, fk_F, parallel_mas2);
+
+//		MPI_Reduce(parallel_mas2.data(), parallel_mas3.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
+//		if (rank == 0) {
+//			transform(f0kcel.begin(), f0kcel.end(), parallel_mas3.begin(), f0k2cel.begin(), std::plus<complex<double> >());
+//	}
+
+//		fill(parallel_mas2.begin(), parallel_mas2.end(), 0);
+//		PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_TS, Kvector_TS, IEy1last_TS, IEx1last_TS, b1last_TS, fk_TS, parallel_mas2);
+//		MPI_Reduce(parallel_mas2.data(), parallel_mas3.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
+//		if (rank == 0) {
+//			transform(f0k2cel.begin(), f0k2cel.end(), parallel_mas3.begin(), f0k2cel.begin(), std::plus<complex<double> >());
+//}
 		fill(parallel_mas2.begin(), parallel_mas2.end(), complex<double>(0., 0.));
-
-		PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_F, Kvector_F, IEy1last_F, IEx1last_F, b1last_F, fk_F, parallel_mas2);
-
-		MPI_Reduce(parallel_mas2.data(), parallel_mas3.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
-		if (rank == 0) {
-			transform(f0kcel.begin(), f0kcel.end(), parallel_mas3.begin(), f0k2cel.begin(), std::plus<complex<double> >());
-		}
-
-		fill(parallel_mas2.begin(), parallel_mas2.end(), 0);
-		PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_TS, Kvector_TS, IEy1last_TS, IEx1last_TS, b1last_TS, fk_TS, parallel_mas2);
+		
+		PERTURBATION_OF_UNIFORM_DISTRIBUTION_COMBINED(
+    		rank, size,
+    		Ngarmonik_F, Kvector_F, IEy1last_F, IEx1last_F, b1last_F, fk_F, parallel_mas2,
+    		Ngarmonik_TS, Kvector_TS, IEy1last_TS, IEx1last_TS, b1last_TS, fk_TS
+		);
 		MPI_Reduce(parallel_mas2.data(), parallel_mas3.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
 		if (rank == 0) {
 			transform(f0k2cel.begin(), f0k2cel.end(), parallel_mas3.begin(), f0k2cel.begin(), std::plus<complex<double> >());
 		}
-
-
+		
+		
+		
 		MPI_Bcast(f0k2cel.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
 		
 		PERTURBATION_OF_MODES_DISTRIBUTION(rank, size, Ngarmonik_F, Kvector_F, IEylast_F, IExlast_F, blast_F, fkcel_F, fk_F, f0k2cel,  parallel_mas1_F);
@@ -309,19 +321,30 @@ int main(int argc, char** argv)
 
 
 		f0k = f0k2;
+		//fill(parallel_mas2.begin(), parallel_mas2.end(), complex<double>(0., 0.));
+		//PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_F, Kvector_F, IEylast_F, IExlast_F, blast_F, fkcel_F, parallel_mas2);
+		//MPI_Reduce(parallel_mas2.data(), parallel_mas3.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
+		//if (rank == 0) {
+		//	transform(f0k.begin(), f0k.end(), parallel_mas3.begin(), f0k2.begin(), std::plus<complex<double> >());
+//}
+//		fill(parallel_mas2.begin(), parallel_mas2.end(), 0);
+//		PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_TS, Kvector_TS, IEylast_TS, IExlast_TS, blast_TS, fkcel_TS, parallel_mas2);
+//		MPI_Reduce(parallel_mas2.data(), parallel_mas3.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
+//		if (rank == 0) {
+//			transform(f0k2.begin(), f0k2.end(), parallel_mas3.begin(), f0k2.begin(), std::plus<complex<double> >());
+//	}
+
+		
 		fill(parallel_mas2.begin(), parallel_mas2.end(), complex<double>(0., 0.));
-		PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_F, Kvector_F, IEylast_F, IExlast_F, blast_F, fkcel_F, parallel_mas2);
-		MPI_Reduce(parallel_mas2.data(), parallel_mas3.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
-		if (rank == 0) {
-			transform(f0k.begin(), f0k.end(), parallel_mas3.begin(), f0k2.begin(), std::plus<complex<double> >());
-		}
-		fill(parallel_mas2.begin(), parallel_mas2.end(), 0);
-		PERTURBATION_OF_UNIFORM_DISTRIBUTION(rank, size, Ngarmonik_TS, Kvector_TS, IEylast_TS, IExlast_TS, blast_TS, fkcel_TS, parallel_mas2);
+		PERTURBATION_OF_UNIFORM_DISTRIBUTION_COMBINED(
+    		rank, size,
+    		Ngarmonik_F, Kvector_F, IEylast_F, IExlast_F, blast_F, fkcel_F, parallel_mas2,
+    		Ngarmonik_TS, Kvector_TS, IEylast_TS, IExlast_TS, blast_TS, fkcel_TS
+		);
 		MPI_Reduce(parallel_mas2.data(), parallel_mas3.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, MPI_SUM, 0, MPI_COMM_WORLD);
 		if (rank == 0) {
 			transform(f0k2.begin(), f0k2.end(), parallel_mas3.begin(), f0k2.begin(), std::plus<complex<double> >());
 		}
-
 		
 		MPI_Bcast(f0k2.data(), setkaBBkvadr, MPI_DOUBLE_COMPLEX, 0, MPI_COMM_WORLD);
 

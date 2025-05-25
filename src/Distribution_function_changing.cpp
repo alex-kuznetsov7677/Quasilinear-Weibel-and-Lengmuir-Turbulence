@@ -30,6 +30,69 @@ complex<double>DifX(int& N, std::vector<complex<double> >& fka) {
 	}
 
 }
+void PERTURBATION_OF_UNIFORM_DISTRIBUTION_COMBINED(
+    int& oblast, int& size,
+    int Ngarmonik_F, std::vector<double>& Kvector_F,
+    std::vector<complex<double>>& IEy_F, std::vector<complex<double>>& IEx_F,
+    std::vector<complex<double>>& b1_F, std::vector<complex<double>>& fk_F,
+    
+    std::vector<complex<double>>& parallel_mas2,
+
+    int Ngarmonik_TS, std::vector<double>& Kvector_TS,
+    std::vector<complex<double>>& IEy_TS, std::vector<complex<double>>& IEx_TS,
+    std::vector<complex<double>>& b1_TS, std::vector<complex<double>>& fk_TS
+) {
+    const double KOEF_F  = dt * C3;
+    const double KOEF_TS = dt * C3 / 2.;
+
+    int NgF_local  = Ngarmonik_F / size;
+    int NgTS_local = Ngarmonik_TS / size;
+
+
+    for (int p2 = 0; p2 < NgF_local; ++p2) {
+        for (int j = 0; j < setkaBB; ++j) {
+            int BBXnomer = j * setkaBB;
+            double BBXrl = Vminx + j * Vstepx;
+
+            for (int k = 0; k < setkaBB; ++k) {
+                int BBXnomerkF0 = BBXnomer + k;
+                int BBXnomerk = p2 * setkaBBkvadr + BBXnomer + k;
+
+                double BBYrl = Vminy + k * Vstepy;
+                complex<double> dfx = DifX(BBXnomerk, fk_F);
+                complex<double> dfy = DifY(BBXnomerk, fk_F);
+                complex<double> dfa = BBYrl * dfx - BBXrl * dfy;
+
+                complex<double> yh1 = -I * IEx_F[p2] * conj(dfx) - I * IEy_F[p2] * conj(dfy) + b1_F[p2] * conj(dfa);
+                parallel_mas2[BBXnomerkF0] -= KOEF_F * (yh1 + conj(yh1));
+            }
+        }
+    }
+
+
+    for (int p2 = 0; p2 < NgTS_local; ++p2) {
+        for (int j = 0; j < setkaBB; ++j) {
+            int BBXnomer = j * setkaBB;
+            double BBXrl = Vminx + j * Vstepx;
+
+            for (int k = 0; k < setkaBB; ++k) {
+                int BBXnomerkF0 = BBXnomer + k;
+                int BBXnomerk = p2 * setkaBBkvadr + BBXnomer + k;
+
+                double BBYrl = Vminy + k * Vstepy;
+                complex<double> dfx = DifX(BBXnomerk, fk_TS);
+                complex<double> dfy = DifY(BBXnomerk, fk_TS);
+                complex<double> dfa = BBYrl * dfx - BBXrl * dfy;
+
+                complex<double> yh1 = -I * IEx_TS[p2] * conj(dfx) - I * IEy_TS[p2] * conj(dfy) + b1_TS[p2] * conj(dfa);
+                parallel_mas2[BBXnomerkF0] -= KOEF_TS * (yh1 + conj(yh1));
+            }
+        }
+    }
+}
+
+
+
 void PERTURBATION_OF_UNIFORM_DISTRIBUTION(int& oblast, int& size, int& Ngarmonik, std::vector<double>& Kvector, std::vector<complex<double> >& IEy, std::vector<complex<double> >& IEx, std::vector<complex<double> >& b1, std::vector<complex<double> >& fk,
 	std::vector<complex<double> >& parallel_mas2) {
 	double KOEF;
