@@ -29,8 +29,8 @@ https://arxiv.org/abs/2504.18859
 ## Configuration
 Simulation parameters are set in config.txt. Key parameters include:
 
-- start_level_F_modes  ---  initial perturbation level for each filamentation mode
-- start_level_TS_modes  ---  initial perturbation level for each two-stream mode
+- start_level_F_modes  &ndash  initial perturbation level for each filamentation mode
+- start_level_TS_modes  &#150  initial perturbation level for each two-stream mode
   
 - Ngarmonik_F_x, Ngarmonik_F_y  ---  number of filamentation modes in x and y
 - Ngarmonik_TS_x, Ngarmonik_TS_y  ---  number of two-stream modes in x and y
