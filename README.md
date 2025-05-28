@@ -29,34 +29,34 @@ https://arxiv.org/abs/2504.18859
 ## Configuration
 Simulation parameters are set in config.txt. Key parameters include:
 
-- start_level_F_modes  &ndash  initial perturbation level for each filamentation mode
-- start_level_TS_modes  &#150  initial perturbation level for each two-stream mode
+- start_level_F_modes  &mdash;  initial perturbation level for each filamentation mode
+- start_level_TS_modes  &mdash;  initial perturbation level for each two-stream mode
   
 - Ngarmonik_F_x, Ngarmonik_F_y  &mdash;  number of filamentation modes in x and y
-- Ngarmonik_TS_x, Ngarmonik_TS_y  ---  number of two-stream modes in x and y
+- Ngarmonik_TS_x, Ngarmonik_TS_y  &mdash;  number of two-stream modes in x and y
   
-- V_stream    directional beam velocity
-- Beta_bkg, Beta_stream    thermal velocities of background and beam plasma
-- ratio    relative beam density
+- V_stream  &mdash;  directional beam velocity
+- Beta_bkg, Beta_stream  &mdash;  thermal velocities of background and beam plasma
+- ratio  &mdash;  relative beam density
 
-- setkaBB - velocity space grid size
-- ratio_Vminx_to_Beta_bkg    X-min boundary - Lower limit of velocity grid in x-direction (in units of β<sub>bkg</sub>)
-- ratio_Vminy_to_Beta_bkg    Y-min boundary - Lower limit of velocity grid in y-direction (in units of β<sub>bkg</sub>)
-- ratio_Vstepx_multiple_setkaBB_to_Beta_bkg    X-step scaling - Determines velocity grid spacing in x-direction: Δv<sub>x</sub> = (β<sub>bkg</sub> × 8)/setkaBB
-- ratio_Vstepy_to_Vstepx   Y-step ratio - Velocity grid spacing in y-direction: Δv<sub>y</sub> = 1.2 × Δv<sub>x</sub>
+- setkaBB  &mdash;  velocity space grid size
+- ratio_Vminx_to_Beta_bkg  &mdash;  X-min boundary - Lower limit of velocity grid in x-direction (in units of β<sub>bkg</sub>)
+- ratio_Vminy_to_Beta_bkg  &mdash;  Y-min boundary - Lower limit of velocity grid in y-direction (in units of β<sub>bkg</sub>)
+- ratio_Vstepx_multiple_setkaBB_to_Beta_bkg  &mdash;  X-step scaling - Determines velocity grid spacing in x-direction: Δv<sub>x</sub> = (β<sub>bkg</sub> × 8)/setkaBB
+- ratio_Vstepy_to_Vstepx  &mdash;  Y-step ratio - Velocity grid spacing in y-direction: Δv<sub>y</sub> = 1.2 × Δv<sub>x</sub>
 
 - Tmax  maximum simulation time (in plasma frequency)
 - dt  time step (in plasma frequency)
 
-- kmin_x_TS		Minimum k<sub>x</sub> - Lower bound of wavevector range in x-direction
-- kstep_x_TS		k<sub>x</sub> step - Spacing between wavevectors in x-direction
-- kmin_y_TS    Minimum k<sub>y</sub> - Lower bound of wavevector range in y-direction
-- kstep_y_TS    k<sub>y</sub> step - Spacing between wavevectors in y-direction
+- kmin_x_TS  &mdash;  Minimum k<sub>x</sub> - Lower bound of wavevector range in x-direction
+- kstep_x_TS  &mdash;  k<sub>x</sub> step - Spacing between wavevectors in x-direction
+- kmin_y_TS  &mdash;  Minimum k<sub>y</sub> - Lower bound of wavevector range in y-direction
+- kstep_y_TS  &mdash;  k<sub>y</sub> step - Spacing between wavevectors in y-direction
 
-- kmin_x_F    Minimum k<sub>x</sub> - Lower bound of wavevector range in x-direction
-- kstep_x_F    k<sub>x</sub> step - Spacing between wavevectors in x-direction
-- kmin_y_F    Minimum k<sub>y</sub> - Lower bound of wavevector range in y-direction
-- kstep_y_F    k<sub>y</sub> step - Spacing between wavevectors in y-direction
+- kmin_x_F  &mdash;  Minimum k<sub>x</sub> - Lower bound of wavevector range in x-direction
+- kstep_x_F  &mdash;  k<sub>x</sub> step - Spacing between wavevectors in x-direction
+- kmin_y_F  &mdash;  Minimum k<sub>y</sub> - Lower bound of wavevector range in y-direction
+- kstep_y_F  &mdash;  k<sub>y</sub> step - Spacing between wavevectors in y-direction
 
 ## Requirements
 
@@ -74,3 +74,4 @@ For questions and bug reports:
 
 - [Open an issue](https://github.com/alex-kuznetsov7677/Quasilinear-Weibel-and-Lengmuir-Turbulence)
 - Email: [kuznetsov.alexey@ipfran.ru](mailto:kuznetsov.alexey@ipfran.ru)
+          [a.kuznetsov7677@gmail.com](mailto:a.kuznetsov7677@gmail.com)
