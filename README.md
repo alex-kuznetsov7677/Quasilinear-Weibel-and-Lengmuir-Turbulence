@@ -19,9 +19,11 @@ https://arxiv.org/abs/2504.18859
 
 ## Compilation and Execution
   To compile the program, run:
+  ```bash
   make
 
   After compilation, run the program with:
+  ```bash
   mpirun -np <number_of_processes> -maxtime <time_of_execution_in_minutes> build/exe9_c
 
 ## Configuration
