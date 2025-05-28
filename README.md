@@ -29,27 +29,34 @@ https://arxiv.org/abs/2504.18859
 ## Configuration
 Simulation parameters are set in config.txt. Key parameters include:
 
-- start_level_F_modes - initial perturbation level for each filamentation mode
-- start_level_TS_modes - initial perturbation level for each two-stream mode
+- start_level_F_modes    initial perturbation level for each filamentation mode
+- start_level_TS_modes    initial perturbation level for each two-stream mode
   
-- Ngarmonik_F_x, Ngarmonik_F_y - number of filamentation modes in x and y
-- Ngarmonik_TS_x, Ngarmonik_TS_y - number of two-stream modes in x and y
+- Ngarmonik_F_x, Ngarmonik_F_y    number of filamentation modes in x and y
+- Ngarmonik_TS_x, Ngarmonik_TS_y    number of two-stream modes in x and y
   
-- V_stream - directional beam velocity
-- Beta_bkg, Beta_stream - thermal velocities of background and beam plasma
-- ratio - relative beam density
+- V_stream    directional beam velocity
+- Beta_bkg, Beta_stream    thermal velocities of background and beam plasma
+- ratio    relative beam density
 
 - setkaBB - velocity space grid size
-- ratio_Vminx_to_Beta_bkg - X-min boundary - Lower limit of velocity grid in x-direction (in units of β<sub>bkg</sub>)
-- ratio_Vminy_to_Beta_bkg - Y-min boundary - Lower limit of velocity grid in y-direction (in units of β<sub>bkg</sub>)
-- ratio_Vstepx_multiple_setkaBB_to_Beta_bkg - X-step scaling - Determines velocity grid spacing in x-direction: Δv<sub>x</sub> = (β<sub>bkg</sub> × 8)/setkaBB
-- ratio_Vstepy_to_Vstepx - Y-step ratio - Velocity grid spacing in y-direction: Δv<sub>y</sub> = 1.2 × Δv<sub>x</sub>
+- ratio_Vminx_to_Beta_bkg    X-min boundary - Lower limit of velocity grid in x-direction (in units of β<sub>bkg</sub>)
+- ratio_Vminy_to_Beta_bkg    Y-min boundary - Lower limit of velocity grid in y-direction (in units of β<sub>bkg</sub>)
+- ratio_Vstepx_multiple_setkaBB_to_Beta_bkg    X-step scaling - Determines velocity grid spacing in x-direction: Δv<sub>x</sub> = (β<sub>bkg</sub> × 8)/setkaBB
+- ratio_Vstepy_to_Vstepx   Y-step ratio - Velocity grid spacing in y-direction: Δv<sub>y</sub> = 1.2 × Δv<sub>x</sub>
 
-- Tmax - maximum simulation time (in plasma frequency)
-- dt - time step (in plasma frequency)
+- Tmax  maximum simulation time (in plasma frequency)
+- dt  time step (in plasma frequency)
 
--
--
+- kmin_x_TS		Minimum k<sub>x</sub> - Lower bound of wavevector range in x-direction
+- kstep_x_TS		k<sub>x</sub> step - Spacing between wavevectors in x-direction
+- kmin_y_TS    Minimum k<sub>y</sub> - Lower bound of wavevector range in y-direction
+- kstep_y_TS    k<sub>y</sub> step - Spacing between wavevectors in y-direction
+
+- kmin_x_F    Minimum k<sub>x</sub> - Lower bound of wavevector range in x-direction
+- kstep_x_F    k<sub>x</sub> step - Spacing between wavevectors in x-direction
+- kmin_y_F    Minimum k<sub>y</sub> - Lower bound of wavevector range in y-direction
+- kstep_y_F    k<sub>y</sub> step - Spacing between wavevectors in y-direction
 
 ## Requirements
 
