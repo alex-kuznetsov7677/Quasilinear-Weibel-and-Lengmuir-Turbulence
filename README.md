@@ -9,15 +9,16 @@ Numerical implementation of the quasilinear model for coupled evolution of Langm
 https://arxiv.org/abs/2504.18859
 
 ## 📌 Key Features
-- Solves coupled Vlasov-Maxwell equations in 2D velocity space
-- Models simultaneous evolution of:
-  - Langmuir (two-stream) turbulence
-  - Weibel (filamentation) turbulence
+- Solves the Vlasov-Maxwell equations in 2D velocity-space and wavevector-space grids.
+- Simulates quasilinear interaction between Langmuir (two-stream) and Weibel (filamentation) instabilities in a collisionless, unmagnetized plasma-beam system.
 - Tracks spectral dynamics and field energy transfer
 - Implements Stormer-Verlet (Leapfrog) numerical scheme
-- Parallelized for efficient computation
+- MPI-parallelized for efficient computation of mode dynamics across distributed systems (e.g., KIAM K100 supercomputer).
 
 ## Compilation and Execution
+
+This code was developed on the [KIAM K100 supercomputer (Moscow, Russia)](https://www.kiam.ru/MVS/).
+
   To compile the program, run:
   ```bash
   make
@@ -73,5 +74,6 @@ Apache License 2.0 - See [LICENSE](LICENSE) for details.
 For questions and bug reports:
 
 - [Open an issue](https://github.com/alex-kuznetsov7677/Quasilinear-Weibel-and-Lengmuir-Turbulence)
-- Email: [kuznetsov.alexey@ipfran.ru](mailto:kuznetsov.alexey@ipfran.ru)
-          [a.kuznetsov7677@gmail.com](mailto:a.kuznetsov7677@gmail.com)
+- Email:
+  - [kuznetsov.alexey@ipfran.ru](mailto:kuznetsov.alexey@ipfran.ru)
+  - [a.kuznetsov7677@gmail.com](mailto:a.kuznetsov7677@gmail.com)
