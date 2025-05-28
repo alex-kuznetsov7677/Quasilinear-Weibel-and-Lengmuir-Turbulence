@@ -31,14 +31,32 @@ Simulation parameters are set in config.txt. Key parameters include:
 
 - start_level_F_modes - initial perturbation level for each filamentation mode
 - start_level_TS_modes - initial perturbation level for each two-stream mode
+  
 - Ngarmonik_F_x, Ngarmonik_F_y - number of filamentation modes in x and y
 - Ngarmonik_TS_x, Ngarmonik_TS_y - number of two-stream modes in x and y
+  
 - V_stream - directional beam velocity
 - Beta_bkg, Beta_stream - thermal velocities of background and beam plasma
 - ratio - relative beam density
+
 - setkaBB - velocity space grid size
+- ratio_Vminx_to_Beta_bkg - X-min boundary - Lower limit of velocity grid in x-direction (in units of β<sub>bkg</sub>)
+- ratio_Vminy_to_Beta_bkg - Y-min boundary - Lower limit of velocity grid in y-direction (in units of β<sub>bkg</sub>)
+- ratio_Vstepx_multiple_setkaBB_to_Beta_bkg - X-step scaling - Determines velocity grid spacing in x-direction: Δv<sub>x</sub> = (β<sub>bkg</sub> × 8)/setkaBB
+- ratio_Vstepy_to_Vstepx - Y-step ratio - Velocity grid spacing in y-direction: Δv<sub>y</sub> = 1.2 × Δv<sub>x</sub>
+
 - Tmax - maximum simulation time (in plasma frequency)
 - dt - time step (in plasma frequency)
+
+-
+-
+
+## Requirements
+
+- C++ compiler (e.g., g++)
+- MPI (e.g., OpenMPI)
+- Standard math libraries
+
 ## License
 
 Apache License 2.0 - See [LICENSE](LICENSE) for details.
